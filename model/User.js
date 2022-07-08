@@ -15,7 +15,24 @@ const user_schema = new Schema(
             required: true,
             unique: true,
             match:[/^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/]
+        },
+        thoughts: [{
+            type: Schema.Types.ObjectId,
+            ref: "Thought",
+        }],
+        friends: [{
+            type: Schema.Types.ObjectId,
+            ref:"User",
+        }]
+    },
+    {
+        toJSON: {
+            virtuals: true,
+        },
+        id: false,
 
-        }
     }
 )
+
+const User = model("User", user_schema);
+module.exports = User
