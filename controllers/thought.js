@@ -1,3 +1,6 @@
+// https://courses.bootcampspot.com/courses/1196/pages/18-dot-2-5-create-the-pizza-controller-methods?module_item_id=463054
+// https://courses.bootcampspot.com/courses/1196/pages/18-dot-1-1-introduction?module_item_id=462937
+
 const { Thought, User } = require('../model');
 
 const ThoughtDatabase = {
