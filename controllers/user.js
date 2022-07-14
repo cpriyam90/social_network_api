@@ -1,7 +1,7 @@
 const { User } = require('../model')
 
-// get all users
 const UserDatabase = {
+// get all users
     getallusers(req, res) {
       User.find({})
         .populate({
