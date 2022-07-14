@@ -7,6 +7,11 @@ const ThoughtDatabase = {
     // get thoughts
         getallthoughts(req, res) {
           Thought.find({})
+          .populate({
+            path: 'thoughts',
+            select: '-__v'
+            })
+            .select('-__v')
             .then(dbUserThoughts => res.json(dbUserThoughts))
             .catch(err => {
               res.sendStatus(400);
@@ -50,12 +55,17 @@ const ThoughtDatabase = {
             res.status(400).json(error);
           })
       },
+
     // delete a thought by its id
+      deleteThought({ params }, res) {
+        Thought.findOneAndDelete({ _id: params.id })
+        .then(dbUserThoughts => res.json(dbUserThoughts))
+        .catch(err => {
+            res.status(400).json(error);
+          })
+      },
     // create a reaction
     // delete a reaction by reactionID
   }
-
-
-
 
 module.exports = ThoughtDatabase;
