@@ -11,7 +11,6 @@ const UserDatabase = {
         .select('-__v')
         .then(dbSocialUser => res.json(dbSocialUser))
         .catch(err => {
-          console.log(err);
           res.sendStatus(400);
         });
     },
@@ -25,14 +24,72 @@ const UserDatabase = {
         .select('-__v')
         .then(dbSocialUser => res.json(dbSocialUser))
         .catch(err => {
-            console.log(err);
             res.sendStatus(400);
         });
     },
-}
 
 // create new users 
-// update a user by their id
+    createNewUser({ body }, res) {
+         User.create(body)
+        .then(dbSocialUser => res.json(dbSocialUser))
+        .catch(err => {
+            res.status(400).json(error);
+          })
+    },
+ 
+// update a user by their id  
+    updateUserById({ params, body }, res) {
+        User.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
+        .then(dbSocialUser => {
+            if (!dbSocialUser) {
+            res.status(404).json({ message: 'No user exists with this ID' });
+            return;
+            }
+            res.json(dbSocialUser);
+        })
+        .catch(err => {
+            res.status(400).json(error);
+          })
+    },
+ 
 // delete a user by their id
-// add a new friend
+    deleteuserById({ params }, res) {
+        User.findOneAndDelete({ _id: params.id })
+        .then(dbSocialUser => res.json(dbSocialUser))
+        .catch(err => {
+            res.status(400).json(error);
+          })
+    },
+
+// add a new friend    
+    addNewFriend({ params, body }, res) {
+        User.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
+        .then(dbSocialUser => {
+            if (!dbSocialUser) {
+            res.status(404).json({ message: 'No user exists with this ID' });
+            return;
+            }
+            res.json(dbSocialUser);
+        })
+        .catch(err => {
+            res.status(400).json(error);
+          })
+    }, 
+
 // delete a friend
+    deleteFriend({ params }, res) {
+        User.findOneAndDelete({ _id: params.id })
+        .then(dbSocialUser => res.json(dbSocialUser))
+        .catch(err => {
+            res.status(400).json(error);
+        })  
+},
+}
+
+module.exports = UserDatabase;
+
+
+
+
+
+
