@@ -13,7 +13,7 @@ const UserDatabase = {
         .select('-__v')
         .then(dbSocialUser => res.json(dbSocialUser))
         .catch(err => {
-          res.sendStatus(400);
+          res.sendStatus(400).json(err);
         });
     },
 // get a single user by their id
@@ -26,7 +26,7 @@ const UserDatabase = {
         .select('-__v')
         .then(dbSocialUser => res.json(dbSocialUser))
         .catch(err => {
-            res.sendStatus(400);
+            res.sendStatus(400).json(err);
         });
     },
 
@@ -35,7 +35,8 @@ const UserDatabase = {
          User.create(body)
         .then(dbSocialUser => res.json(dbSocialUser))
         .catch(err => {
-            res.status(400).json(error);
+            res.status(400).json(err);
+            console.log(err)
           })
     },
  
@@ -50,7 +51,7 @@ const UserDatabase = {
             res.json(dbSocialUser);
         })
         .catch(err => {
-            res.status(400).json(error);
+            res.status(400).json(err);
           })
     },
  
@@ -59,13 +60,13 @@ const UserDatabase = {
         User.findOneAndDelete({ _id: params.id })
         .then(dbSocialUser => res.json(dbSocialUser))
         .catch(err => {
-            res.status(400).json(error);
+            res.status(400).json(err);
           })
     },
 
 // add a new friend    
     addNewFriend({ params, body }, res) {
-        User.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
+        User.findOneAndUpdate({ _id: params.id }, {$addToSet:{freinds:req.params.friendid}}, { new: true, runValidators: true })
         .then(dbSocialUser => {
             if (!dbSocialUser) {
             res.status(404).json({ message: 'No user exists with this ID' });
@@ -74,7 +75,7 @@ const UserDatabase = {
             res.json(dbSocialUser);
         })
         .catch(err => {
-            res.status(400).json(error);
+            res.status(400).json(err);
           })
     }, 
 
@@ -83,7 +84,7 @@ const UserDatabase = {
         User.findOneAndDelete({ _id: params.id })
         .then(dbSocialUser => res.json(dbSocialUser))
         .catch(err => {
-            res.status(400).json(error);
+            res.status(400).json(err);
         })  
 },
 }

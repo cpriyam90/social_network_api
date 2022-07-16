@@ -7,16 +7,13 @@ const {
     getSingleUserById,
     createNewUser,
     updateUserById,
-    eleteuserById
+    deleteuserById
   } = require('../../controllers/user');
   
   // all users
-  router.get('/')
-  router.post('/')
+  router.route("/").get(getallusers).post(createNewUser);
 
   // user by id
-  router.get('/:id')
-  router.put('/:id')
-  router.delete('/:id')
+  router.route("/:id").get(getSingleUserById).put(updateUserById).delete(deleteuserById);
   
   module.exports = router;
