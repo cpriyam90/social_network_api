@@ -8,7 +8,7 @@ const ThoughtDatabase = {
         getallthoughts(req, res) {
           Thought.find({})
           .populate({
-            path: 'thoughts',
+            path: 'user',
             select: '-__v'
             })
             .select('-__v')
@@ -22,7 +22,7 @@ const ThoughtDatabase = {
         getSingleThought({ params }, res) {
           Thought.findOne({ _id: params.id })
           .populate({
-              path: 'thoughts',
+              path: 'user',
               select: '-__v'
           })
           .select('-__v')
