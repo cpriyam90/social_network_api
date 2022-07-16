@@ -66,27 +66,33 @@ const UserDatabase = {
 
 // add a new friend    
     addNewFriend({ params, body }, res) {
-        User.findOneAndUpdate({ _id: params.id }, {$addToSet:{freinds:req.params.friendid}}, { new: true, runValidators: true })
+        User.findOneAndUpdate({ _id: params.id }, {$addToSet:{friends: params.friendid}}, { new: true })
         .then(dbSocialUser => {
             if (!dbSocialUser) {
             res.status(404).json({ message: 'No user exists with this ID' });
-            return;
             }
-            res.json(dbSocialUser);
+            res.json("new friend has been added");
         })
         .catch(err => {
             res.status(400).json(err);
+            console.log(err)
           })
     }, 
 
 // delete a friend
     deleteFriend({ params }, res) {
-        User.findOneAndDelete({ _id: params.id })
-        .then(dbSocialUser => res.json(dbSocialUser))
+        User.findOneAndUpdate({ _id: params.id }, {$pull:{friends: params.friendid}}, { new: true })
+        .then(dbSocialUser => {
+            if (!dbSocialUser) {
+            res.status(404).json({ message: 'No user exists with this ID' });
+            }
+            res.json("friend has been deleted");
+        })
         .catch(err => {
             res.status(400).json(err);
-        })  
-},
+            console.log(err)
+          })
+        }
 }
 
 module.exports = UserDatabase;

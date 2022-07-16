@@ -1,5 +1,5 @@
 // **Credits/ Citations**
-// Tutor Abdullah for creating user and thought model
+// Tutor Abdullah for creating user and thought model and virtual count
 // email match from stack overflow for email in schema- https://stackoverflow.com/questions/18022365/mongoose-validate-email-syntax
 // module 18 in bootcamp spot - Pizza Model - https://courses.bootcampspot.com/courses/1196/pages/18-dot-1-5-install-mongoose-and-create-the-pizza-model?module_item_id=462970
 // in class activities for module 18
@@ -33,11 +33,15 @@ const user_schema = new Schema(
     {
         toJSON: {
             virtuals: true,
+            getters: true
         },
         id: false,
 
     }
 )
 
+user_schema.virtual("count").get(function(){
+    return this.friends.length
+})
 const User = model("User", user_schema);
 module.exports = User
