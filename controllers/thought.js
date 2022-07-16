@@ -76,9 +76,23 @@ const ThoughtDatabase = {
             res.status(400).json(err);
             console.log(err)
           })
-     }
+     },
 
     // delete a reaction by reactionID
+    deletereaction (req, res){
+      Thought.findOneAndUpdate({ _id: req.params.id }, {$pull:{reactions: {_id: req.params.reactionId}}}, { new: true })
+      .then(dbSocialUser => {
+          if (!dbSocialUser) {
+          res.status(404).json({ message: 'No reaction exists with this ID' });
+          }
+          res.json("reaction has been deleted");
+      })
+      .catch(err => {
+          res.status(400).json(err);
+          console.log(err)
+        })
+      } 
+    
   }
 
 module.exports = ThoughtDatabase;
