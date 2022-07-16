@@ -14,7 +14,7 @@ const ThoughtDatabase = {
             .select('-__v')
             .then(dbUserThoughts => res.json(dbUserThoughts))
             .catch(err => {
-              res.sendStatus(400);
+              res.sendStatus(400).json(err);
             });
         },
 
@@ -28,17 +28,26 @@ const ThoughtDatabase = {
           .select('-__v')
           .then(dbUserThoughts => res.json(dbUserThoughts))
           .catch(err => {
-              res.sendStatus(400);
+              res.sendStatus(400).json(err);
           });
       },  
 
     // create a thought
       createThought({ body }, res) {
         Thought.create(body)
-        .then(dbUserThoughts => res.json(dbUserThoughts))
+        .then (newthought => {
+            return User.findOneAndUpdate(
+              {_id: params.userid}, 
+              {$addToSet:{thoughts:newthought._id}},
+              {new: true}
+            )
+        })
+        .then (newthought =>{
+          res.json(newthought)
+        })
         .catch(err => {
-            res.status(400).json(error);
-          })
+          res.sendStatus(400).json(err);
+      });
       },
 
     // update thought by its id

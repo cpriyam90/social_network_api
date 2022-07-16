@@ -8,4 +8,9 @@ const {
     deleteThought
 } = require('../../controllers/thought');
 
+router.route("/").get(getallthoughts)
+router.route("/:userid").post(createThought)
+
+router.route("/:id").get(getSingleThought)
+
 module.exports = router;
