@@ -17,6 +17,8 @@ This api is invoked from the terminal and links to the Mongo database. With the 
 
 
 ## Video-Link
+* I ran out of recording time and had to create a second video to show my delte thought route. Please see both videos to see the complete criteria requirements for this assignment. Thank you for understanding 
+* **[Click here for video link]()**
 * **[Click here for video link]()**
 
 
